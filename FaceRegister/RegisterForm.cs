@@ -1,6 +1,7 @@
 ﻿using FaceRegister.Camera;
 using FaceRegister.Common;
 using FaceRegister.FaceMoudule;
+using sun.awt;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -18,8 +19,8 @@ namespace FaceRegister
         private bool IsPlaying = false;
         private string URLVideo = "rtsp://vjaip001:vjaip2022@192.168.1.101:554/stream1";
         private int skipframeProcess = 10;
-        private Image emptyface = Bitmap.FromFile("face_regist.png");
-        private Image checkedBox = Bitmap.FromFile("checkbox.png");
+        private Image emptyface = new Bitmap(100, 100);
+        private Image checkedBox = new Bitmap(100,100);
         private string [] company = { "AI Power", "Blockhive", "SKCompany" };
         private string pathSaveface = @"FaceRecored";
         private bool continueRegister = false;
@@ -28,9 +29,10 @@ namespace FaceRegister
         private string no_facedetected_msg = "No face detected! Looking for face...";
         private string ico_facedetected = "🤗";
         private string ico_no_face_detected = "😢";
-        private string icon_folder = "";
-        private Image loader = Bitmap.FromFile("loading.gif");
+        private string resource = "";
+        private Image loader = new Bitmap(100, 100);
         private string path_save = "";
+        ConfigSetting configForm = new ConfigSetting();
 
         public RegisterForm()
         {
@@ -106,19 +108,23 @@ namespace FaceRegister
         }
 
         private void updateSetting(Dictionary<string, string> dataUpdate)
-        {
-            this.URLVideo = dataUpdate["URLVideo"];
-            this.skipframeProcess = Int32.Parse(dataUpdate["skipframeProcess"]);
-            this.icon_folder = dataUpdate["icon_folder"];
-            this.emptyface = Bitmap.FromFile(dataUpdate["emptyface"]);
-            this.checkedBox = Bitmap.FromFile(dataUpdate["checkedBox"]);
+        {         
             this.company = dataUpdate["company"].Split(',');
+
+            this.URLVideo = dataUpdate["URLVideo"];
             this.pathSaveface = dataUpdate["pathSaveface"];
-            this.numFaceGet = Int32.Parse(dataUpdate["numFaceGet"]);
             this.facedetected_msg = dataUpdate["facedetected_msg"];
             this.no_facedetected_msg = dataUpdate["no_facedetected_msg"];
             this.ico_facedetected = dataUpdate["ico_facedetected"];
             this.ico_no_face_detected = dataUpdate["ico_no_face_detected"];
+
+            this.skipframeProcess = Int32.Parse(dataUpdate["skipframeProcess"]);
+            this.numFaceGet = Int32.Parse(dataUpdate["numFaceGet"]);
+
+            this.resource = dataUpdate["resource"];
+            this.emptyface = Bitmap.FromFile(Path.Combine(this.resource,dataUpdate["emptyface"]));
+            this.checkedBox = Bitmap.FromFile(Path.Combine(this.resource,dataUpdate["checkedBox"]));
+            this.loader = Bitmap.FromFile(Path.Combine(this.resource, dataUpdate["loader"]));
         }
 
 
@@ -322,6 +328,28 @@ namespace FaceRegister
         private void showList_btn_Click(object sender, EventArgs e)
         {
             Process.Start(pathSaveface);
+        }
+
+        private void closeBtn_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void configBtn_Click(object sender, EventArgs e)
+        {
+            this.Visible = false;
+            this.Enabled = false;
+            this.configForm.ShowDialog();
+        }
+
+        private void alarmPanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void recordVd_btn_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

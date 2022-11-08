@@ -10,9 +10,14 @@ namespace FaceRegister.Common
 {
     class Config
     {
-        public static Dictionary<string, string> readConfigFile()
+        public static Dictionary<string, string> readConfigFile(string fname="")
         {
-            Dictionary<string, string> dataInFile = getDictionaryConfig("AppSetting.ini");
+            if (string.IsNullOrEmpty(fname))
+            {
+                fname = "AppSetting.ini";
+            }
+
+            Dictionary<string, string> dataInFile = getDictionaryConfig(fname);
             return dataInFile;
         }
 

@@ -15,14 +15,27 @@ namespace FaceRegister.Camera
 
         public void StreamVideo(string IPorURLCamera)
         {
-            if (IPorURLCamera == "0" || string.IsNullOrEmpty(IPorURLCamera))
+            try
             {
-                capture = new Capture(0);          
+                bool isNumber = int.TryParse(IPorURLCamera, out int portCam);
+                if (isNumber)
+                {
+                    capture = new Capture(portCam);
+                }
+                else if (string.IsNullOrEmpty(IPorURLCamera))
+                {
+                    capture = new Capture(0);
+                }
+                else
+                {
+                    capture = new Capture(IPorURLCamera);
+                }
             }
-            else
+            catch(Exception e)
             {
-                capture = new Capture(IPorURLCamera);
+                Console.WriteLine("CAMERA EXCEPTION: " + e);
             }
+          
         }
 
         public Bitmap GetImage()

@@ -6,8 +6,10 @@ using System.Windows.Forms;
 
 namespace FaceRegister
 {
+   
     static class Program
     {
+        public static RegisterForm mainForm = null;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -16,7 +18,7 @@ namespace FaceRegister
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new RegisterForm());
+            Application.Run(mainForm = new RegisterForm());
         }
     }
 }
