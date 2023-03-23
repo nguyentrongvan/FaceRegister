@@ -17,11 +17,11 @@ namespace FaceRegister
     {
         private CameraControl camControl = null;
         private bool IsPlaying = false;
-        private string URLVideo = "rtsp://vjaip001:vjaip2022@192.168.1.101:554/stream1";
+        private string URLVideo = "";
         private int skipframeProcess = 10;
         private Image emptyface = new Bitmap(100, 100);
         private Image checkedBox = new Bitmap(100,100);
-        private string [] company = { "AI Power", "Blockhive", "SKCompany" };
+        private string [] company = { "Comp01", "Tech03", "BoshTech00"};
         private string pathSaveface = @"FaceRecored";
         private bool continueRegister = false;
         private int numFaceGet = 10;
